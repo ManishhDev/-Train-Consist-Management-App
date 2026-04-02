@@ -1,0 +1,32 @@
+# Compiled Java files
+*.class
+
+# Package files
+*.jar
+*.war
+*.zip
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.suo
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build directories
+bin/
+build/
+out/
+
+# Gradle
+.gradle/
+
+# Maven
+target/
+
+# Log files
+*.log
