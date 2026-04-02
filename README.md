@@ -156,6 +156,51 @@ The Train Consist Management App is a console-based Java application that simula
 
 ---
 
+### UC5: Preserve Insertion Order of Bogies (LinkedHashSet)
+
+**Goal:** Maintain insertion order while enforcing uniqueness of bogies in the train formation.
+
+**Actor:** User
+
+**Flow:**
+1. User attaches bogies (Engine, Sleeper, Cargo, Guard) to formation
+2. System stores in LinkedHashSet (maintains order AND uniqueness)
+3. User attempts to attach duplicate bogies (Engine, Sleeper again)
+4. System automatically rejects duplicates
+5. User adds new bogie (Pantry)
+6. Final formation is displayed in exact attachment sequence
+
+**Key Concepts:**
+- LinkedHashSet – Hash table + linked list implementation maintaining both uniqueness and insertion order
+- Set Interface – Collection type that does not allow duplicate elements
+- add() Method – Returns true if added, false if already exists (duplicate)
+- Automatic Deduplication – LinkedHashSet removes duplicates internally
+- Insertion Order Preservation – Unlike HashSet, LinkedHashSet maintains attachment sequence
+- Ordered Iteration – Enhanced for loop returns elements in insertion order
+- contains() Method – Check if bogie exists in formation
+
+**Key Requirements:**
+✓ Create a LinkedHashSet<String> for ordered formation  
+✓ Attach bogies: Engine, Sleeper, Cargo, Guard (in attachment order)  
+✓ Print formation showing all bogies in exact sequence (4 total)  
+✓ Attempt to attach duplicate bogies: Engine, Sleeper  
+✓ Observe no duplicates in output despite attempted additions  
+✓ Add new bogie: Pantry  
+✓ Print final formation with all unique bogies in order (5 total)  
+✓ Check if specific bogies exist: Sleeper (yes), Locomotive (no)  
+
+**Key Benefits:**
+- Enforces business rules (no duplicate bogies in formation)
+- Preserves physical attachment sequence
+- Combines benefits of both HashSet (uniqueness) and LinkedList (ordering)
+- Teaches when LinkedHashSet is better than HashSet or List
+- Models real-world train formation with safety constraints
+- Demonstrates Set interface flexibility for different use cases
+
+**Status:** ✅ Implemented
+
+---
+
 ## Project Structure
 ```
 Train Consist Management App/
@@ -279,6 +324,42 @@ Total bogies in consist: 4
 2. Pantry-Car
 3. AC-Chair
 4. Cargo
+
+--- Building Ordered Formation (LinkedHashSet - Order + Uniqueness) ---
+Attaching bogies to formation: Engine -> Sleeper -> Cargo -> Guard
+✓ Attached to formation: Engine
+✓ Attached to formation: Sleeper
+✓ Attached to formation: Cargo
+✓ Attached to formation: Guard
+
+--- Ordered Train Formation (LinkedHashSet) ---
+Total unique bogies in formation: 4
+1. Engine
+2. Sleeper
+3. Cargo
+4. Guard
+
+--- Attempting to Attach Duplicate Bogies ---
+⚠ Duplicate bogie ignored: Sleeper (already in formation)
+⚠ Duplicate bogie ignored: Engine (already in formation)
+✓ Attached to formation: Pantry
+
+--- Ordered Train Formation (LinkedHashSet) ---
+Total unique bogies in formation: 5
+1. Engine
+2. Sleeper
+3. Cargo
+4. Guard
+5. Pantry
+
+--- Checking Bogie Presence in Formation ---
+✓ Sleeper is in the formation
+✗ Locomotive is not in the formation
+
+--- Final Summary ---
+Total unique bogie IDs in train: 4
+Total bogies in ordered consist: 4
+Total bogies in ordered formation: 5
 ```
 
 ## Development Workflow
