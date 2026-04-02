@@ -246,13 +246,60 @@ The Train Consist Management App is a console-based Java application that simula
 
 ---
 
+### UC7: Sort Bogies by Capacity (Comparator)
+
+**Goal:** Sort passenger bogies based on their seating capacity using custom Comparator logic.
+
+**Actor:** User
+
+**Flow:**
+1. User creates Bogie custom objects with properties (name, capacity, type)
+2. System stores bogies in a List<Bogie>
+3. User applies Comparator to sort by capacity in ascending order
+4. System displays sorted bogies (48→72→120→180 seats)
+5. User applies Comparator.reversed() to sort in descending order
+6. System displays high-capacity bogies first (180→120→72→48 seats)
+
+**Key Concepts:**
+- Comparator Interface – Functional interface for custom comparison logic
+- Custom Objects – Bogie class models real-world attributes (name, capacity, type)
+- List Collection – Stores Bogie objects dynamically for sorting and iteration
+- Collections.sort() Method – Applies Comparator to rearrange elements
+- Comparator.comparingInt() – Lambda-friendly method for int-based sorting
+- .reversed() Method – Reverse the natural order of Comparator
+- Method References – Using Bogie::getCapacity for clean lambda syntax
+- Separation of Data and Logic – Keeps data independent from sorting behavior
+
+**Key Requirements:**
+✓ Create Bogie class with name, capacity, and type fields  
+✓ Create a List<Bogie> to store passenger bogie objects  
+✓ Add bogies: Sleeper(72), AC-Chair(120), First-Class(48), General(180)  
+✓ Display unsorted bogies showing insertion order (72→120→48→180)  
+✓ Use Comparator.comparingInt() to sort ascending (48→72→120→180)  
+✓ Use Comparator.comparingInt().reversed() to sort descending (180→120→72→48)  
+✓ Display sorted results after each operation  
+
+**Key Benefits:**
+- Introduces object-based collection handling (no longer just strings/ints)
+- Teaches custom comparison logic for business rules
+- Improves train planning and capacity analysis
+- Demonstrates separation between data and sorting behavior
+- Prepares for enterprise-level collection processing
+- Shows practical use of Java Comparator interface
+- Enables intelligent capacity planning for train composition
+
+**Status:** ✅ Implemented
+
+---
+
 ## Project Structure
 ```
 Train Consist Management App/
 ├── src/
 │   ├── main/
 │   │   └── java/
-│   │       └── TrainConsistApp.java
+│   │       ├── TrainConsistApp.java    (Main application - UC1-UC7)
+│   │       └── Bogie.java              (Custom class for UC7)
 │   └── test/
 ├── README.md
 └── .gitignore
@@ -263,7 +310,9 @@ Train Consist Management App/
 ### Compile
 ```bash
 cd src\main\java
-javac TrainConsistApp.java
+javac Bogie.java TrainConsistApp.java
+# Or compile all Java files:
+javac *.java
 ```
 
 ### Run
@@ -428,11 +477,48 @@ Total Train Capacity: 752 units
 ✓ Sleeper capacity: 72 units
 ✗ Locomotive not registered
 
+--- Creating Passenger Bogie Objects (UC7) ---
+Adding passenger bogies as custom objects
+✓ Created bogies: Sleeper (Capacity: 72)
+✓ Created bogies: AC-Chair (Capacity: 120)
+✓ Created bogies: First-Class (Capacity: 48)
+✓ Created bogies: General (Capacity: 180)
+
+--- Unsorted Passenger Bogies ---
+
+--- Passenger Bogies Details ---
+Total passenger bogies: 4
+1. Sleeper -> 72 seats
+2. AC-Chair -> 120 seats
+3. First-Class -> 48 seats
+4. General -> 180 seats
+
+--- Sorting Bogies by Capacity (Ascending) ---
+✓ Sorted bogies by capacity (ascending)
+
+--- Passenger Bogies Details ---
+Total passenger bogies: 4
+1. First-Class -> 48 seats
+2. Sleeper -> 72 seats
+3. AC-Chair -> 120 seats
+4. General -> 180 seats
+
+--- Sorting Bogies by Capacity (Descending - High Capacity First) ---
+✓ Sorted bogies by capacity (descending)
+
+--- Passenger Bogies Details ---
+Total passenger bogies: 4
+1. General -> 180 seats
+2. AC-Chair -> 120 seats
+3. Sleeper -> 72 seats
+4. First-Class -> 48 seats
+
 --- Final Summary ---
 Total unique bogie IDs in train: 4
 Total bogies in ordered consist: 4
 Total bogies in ordered formation: 5
 Total bogies with capacity mapping: 5
+Total passenger bogie objects: 4
 ```
 
 ## Development Workflow

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -29,8 +31,11 @@ public class TrainConsistApp {
     // HashMap to map bogie names to their capacity (UC6)
     private HashMap<String, Integer> bogieCapacityMap;
     
+    // List to store Bogie objects with sorting capability (UC7)
+    private List<Bogie> passengerBogies;
+    
     /**
-     * Constructor - Initialize ArrayList, HashSet, LinkedList, LinkedHashSet, and HashMap
+     * Constructor - Initialize all collections
      */
     public TrainConsistApp() {
         this.bogies = new ArrayList<>();
@@ -38,6 +43,7 @@ public class TrainConsistApp {
         this.orderedConsist = new LinkedList<>();
         this.orderedFormation = new LinkedHashSet<>();
         this.bogieCapacityMap = new HashMap<>();
+        this.passengerBogies = new ArrayList<>();
     }
     
     /**
@@ -348,6 +354,62 @@ public class TrainConsistApp {
         return bogieCapacityMap.size();
     }
     
+    // ========== UC7: Sort Bogies by Capacity (Comparator) ==========
+    
+    /**
+     * Add a passenger bogie as a custom object (UC7)
+     * @param name The bogie name
+     * @param capacity The seating capacity
+     */
+    public void addPassengerBogie(String name, int capacity) {
+        Bogie bogie = new Bogie(name, capacity, "Passenger");
+        passengerBogies.add(bogie);
+        System.out.println("✓ Created bogies: " + name + " (Capacity: " + capacity + ")");
+    }
+    
+    /**
+     * Sort bogies in ascending order by capacity (UC7 - Comparator.comparingInt)
+     */
+    public void sortBogiesByCapacityAscending() {
+        // Using Comparator.comparingInt() for ascending order
+        Collections.sort(passengerBogies, Comparator.comparingInt(Bogie::getCapacity));
+        System.out.println("✓ Sorted bogies by capacity (ascending)");
+    }
+    
+    /**
+     * Sort bogies in descending order by capacity (UC7 - Comparator.comparingInt with reversed)
+     */
+    public void sortBogiesByCapacityDescending() {
+        // Using Comparator.comparingInt().reversed() for descending order
+        Collections.sort(passengerBogies, Comparator.comparingInt(Bogie::getCapacity).reversed());
+        System.out.println("✓ Sorted bogies by capacity (descending)");
+    }
+    
+    /**
+     * Display all passenger bogies with their details (UC7)
+     */
+    public void displayPassengerBogies() {
+        System.out.println("\n--- Passenger Bogies Details ---");
+        if (passengerBogies.isEmpty()) {
+            System.out.println("No passenger bogies defined.");
+        } else {
+            System.out.println("Total passenger bogies: " + passengerBogies.size());
+            int position = 1;
+            for (Bogie bogie : passengerBogies) {
+                System.out.println(position + ". " + bogie.getName() + " -> " + bogie.getCapacity() + " seats");
+                position++;
+            }
+        }
+    }
+    
+    /**
+     * Get the count of passenger bogies
+     * @return Number of passenger bogies
+     */
+    public int getPassengerBogieCount() {
+        return passengerBogies.size();
+    }
+    
     /**
      * Main method - Entry point of the application
      * @param args Command line arguments
@@ -513,11 +575,35 @@ public class TrainConsistApp {
             System.out.println("✗ " + searchBogieCapacity2 + " not registered");
         }
         
+        // UC7: Sort Bogies by Capacity (Comparator)
+        System.out.println("\n--- Creating Passenger Bogie Objects (UC7) ---");
+        System.out.println("Adding passenger bogies as custom objects");
+        
+        app.addPassengerBogie("Sleeper", 72);
+        app.addPassengerBogie("AC-Chair", 120);
+        app.addPassengerBogie("First-Class", 48);
+        app.addPassengerBogie("General", 180);
+        
+        // Display unsorted bogies
+        System.out.println("\n--- Unsorted Passenger Bogies ---");
+        app.displayPassengerBogies();
+        
+        // Sort by capacity - ascending order
+        System.out.println("\n--- Sorting Bogies by Capacity (Ascending) ---");
+        app.sortBogiesByCapacityAscending();
+        app.displayPassengerBogies();
+        
+        // Sort by capacity - descending order (high capacity first)
+        System.out.println("\n--- Sorting Bogies by Capacity (Descending - High Capacity First) ---");
+        app.sortBogiesByCapacityDescending();
+        app.displayPassengerBogies();
+        
         // Final summary
         System.out.println("\n--- Final Summary ---");
         System.out.println("Total unique bogie IDs in train: " + app.getUniqueBogieIDCount());
         System.out.println("Total bogies in ordered consist: " + app.getConsistSize());
         System.out.println("Total bogies in ordered formation: " + app.getFormationSize());
         System.out.println("Total bogies with capacity mapping: " + app.getCapacityMapSize());
+        System.out.println("Total passenger bogie objects: " + app.getPassengerBogieCount());
     }
 }
