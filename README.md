@@ -35,6 +35,42 @@ The Train Consist Management App is a console-based Java application that simula
 
 ---
 
+### UC2: Add Passenger Bogies to Train (ArrayList Operations)
+
+**Goal:** Allow dynamic insertion and removal of passenger bogies using ArrayList operation.
+
+**Actor:** User
+
+**Flow:**
+1. User runs the program
+2. Passenger bogies (Sleeper, AC Chair, First Class) are added
+3. Bogies list is displayed after insertion
+4. A bogie (AC Chair) is removed
+5. Bogie existence is checked using contains()
+6. Final list state is displayed
+7. Program continues
+
+**Key Concepts:**
+- ArrayList Methods – add(), remove(), contains(), size()
+- add() Method – Inserts elements into the list at the end
+- remove() Method – Deletes a specific element from the list
+- contains() Method – Checks whether a given element exists in the list
+- Insertion Order Preservation – ArrayList maintains the order of addition
+- CRUD Operations – Create, Read, Update, Delete operations on collections
+- List Iteration – Displaying elements using for loop and get()
+
+**Key Requirements:**
+✓ Create an ArrayList<String> for passenger bogies  
+✓ Add bogies: Sleeper, AC Chair, First Class using add()  
+✓ Print the list after insertion showing all bogies  
+✓ Remove one bogie (AC Chair) using remove()  
+✓ Use contains() to check if Sleeper exists  
+✓ Print final list state after removal  
+
+**Status:** ✅ Implemented
+
+---
+
 ## Project Structure
 ```
 Train Consist Management App/
@@ -65,6 +101,29 @@ java TrainConsistApp
 === Train Consist Management App ===
 Initial bogie count: 0
 Train consist initialized successfully.
+
+--- Adding Passenger Bogies ---
+✓ Added: Sleeper
+✓ Added: AC Chair
+✓ Added: First Class
+
+--- Current Train Consist ---
+Total bogies: 3
+1. Sleeper
+2. AC Chair
+3. First Class
+
+--- Removing a Bogie ---
+✓ Removed: AC Chair
+
+--- Current Train Consist ---
+Total bogies: 2
+1. Sleeper
+2. First Class
+
+--- Checking Bogie Existence ---
+✓ "Sleeper" exists in train consist.
+✗ "AC Chair" does not exist in train consist.
 ```
 
 ## Development Workflow
