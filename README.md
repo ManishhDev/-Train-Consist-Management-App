@@ -71,6 +71,47 @@ The Train Consist Management App is a console-based Java application that simula
 
 ---
 
+### UC3: Track Unique Bogie IDs (Set – HashSet)
+
+**Goal:** Ensure no duplicate bogie IDs are added to the train using HashSet.
+
+**Actor:** User
+
+**Flow:**
+1. User adds bogie IDs (BG101, BG102, BG103)
+2. System inserts into HashSet
+3. User attempts to add duplicate IDs
+4. System automatically deduplicates and ignores duplicates
+5. Unique IDs are displayed
+
+**Key Concepts:**
+- Set Interface – Collection type that does not allow duplicate elements
+- HashSet – Implementation of Set that stores elements using hashing for fast access
+- add() Method – Inserts values into the set, returns true if added, false if duplicate
+- Automatic Deduplication – HashSet ensures uniqueness without manual checks
+- Unordered Storage – Elements are not stored using index positions
+- Iterator/Enhanced For Loop – Iterating through HashSet elements
+
+**Key Requirements:**
+✓ Create a HashSet<String> for bogie IDs  
+✓ Add unique bogie IDs: BG101, BG102, BG103  
+✓ Print the set after insertion showing all unique IDs  
+✓ Attempt to add duplicate IDs: BG101, BG102  
+✓ Observe that duplicates are automatically rejected  
+✓ Add a new unique ID: BG104  
+✓ Print final set showing all unique IDs (4 total)  
+
+**Key Benefits:**
+- Enforces business constraints (no duplicate IDs)
+- Prevents data corruption in railway system
+- Teaches when to use Set instead of List
+- Demonstrates automatic uniqueness enforcement
+- Real-world requirement in train management
+
+**Status:** ✅ Implemented
+
+---
+
 ## Project Structure
 ```
 Train Consist Management App/
@@ -124,6 +165,32 @@ Total bogies: 2
 --- Checking Bogie Existence ---
 ✓ "Sleeper" exists in train consist.
 ✗ "AC Chair" does not exist in train consist.
+
+--- Adding Unique Bogie IDs (HashSet) ---
+✓ Added Bogie ID: BG101
+✓ Added Bogie ID: BG102
+✓ Added Bogie ID: BG103
+
+--- Unique Bogie IDs (HashSet) ---
+Total unique bogie IDs: 3
+1. BG103
+2. BG102
+3. BG101
+
+--- Attempting to Add Duplicate Bogie IDs ---
+⚠ Duplicate Bogie ID ignored: BG101
+⚠ Duplicate Bogie ID ignored: BG102
+✓ Added Bogie ID: BG104
+
+--- Unique Bogie IDs (HashSet) ---
+Total unique bogie IDs: 4
+1. BG104
+2. BG103
+3. BG102
+4. BG101
+
+--- Final Summary ---
+Total unique bogie IDs in train: 4
 ```
 
 ## Development Workflow

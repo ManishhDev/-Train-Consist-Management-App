@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Train Consist Management App
@@ -11,11 +13,15 @@ public class TrainConsistApp {
     // ArrayList to store bogies dynamically
     private List<String> bogies;
     
+    // HashSet to store unique bogie IDs (UC3)
+    private Set<String> uniqueBogieIDs;
+    
     /**
-     * Constructor - Initialize empty ArrayList for bogies
+     * Constructor - Initialize empty ArrayList for bogies and HashSet for unique IDs
      */
     public TrainConsistApp() {
         this.bogies = new ArrayList<>();
+        this.uniqueBogieIDs = new HashSet<>();
     }
     
     /**
@@ -82,6 +88,45 @@ public class TrainConsistApp {
     }
     
     /**
+     * Add a bogie ID to the unique set (UC3)
+     * Automatically handles deduplication
+     * @param bogieID The unique bogie ID to add
+     */
+    public void addUniqueBogieID(String bogieID) {
+        if (uniqueBogieIDs.add(bogieID)) {
+            System.out.println("✓ Added Bogie ID: " + bogieID);
+        } else {
+            System.out.println("⚠ Duplicate Bogie ID ignored: " + bogieID);
+        }
+    }
+    
+    /**
+     * Display all unique bogie IDs in the train (UC3)
+     * HashSet stores elements in unordered manner
+     */
+    public void displayUniqueBogieIDs() {
+        System.out.println("\n--- Unique Bogie IDs (HashSet) ---");
+        if (uniqueBogieIDs.isEmpty()) {
+            System.out.println("No bogie IDs registered.");
+        } else {
+            System.out.println("Total unique bogie IDs: " + uniqueBogieIDs.size());
+            int count = 1;
+            for (String id : uniqueBogieIDs) {
+                System.out.println(count + ". " + id);
+                count++;
+            }
+        }
+    }
+    
+    /**
+     * Get the count of unique bogie IDs
+     * @return Number of unique IDs
+     */
+    public int getUniqueBogieIDCount() {
+        return uniqueBogieIDs.size();
+    }
+    
+    /**
      * Main method - Entry point of the application
      * @param args Command line arguments
      */
@@ -126,5 +171,27 @@ public class TrainConsistApp {
         } else {
             System.out.println("✗ \"" + searchBogie2 + "\" does not exist in train consist.");
         }
+        
+        // UC3: Track Unique Bogie IDs (HashSet - Set Interface)
+        System.out.println("\n--- Adding Unique Bogie IDs (HashSet) ---");
+        app.addUniqueBogieID("BG101");
+        app.addUniqueBogieID("BG102");
+        app.addUniqueBogieID("BG103");
+        
+        // Display unique bogie IDs after insertion
+        app.displayUniqueBogieIDs();
+        
+        // Attempt to add duplicate IDs (automatic deduplication)
+        System.out.println("\n--- Attempting to Add Duplicate Bogie IDs ---");
+        app.addUniqueBogieID("BG101");  // Duplicate
+        app.addUniqueBogieID("BG102");  // Duplicate
+        app.addUniqueBogieID("BG104");  // New ID
+        
+        // Display unique bogie IDs after deduplication attempt
+        app.displayUniqueBogieIDs();
+        
+        // Final summary
+        System.out.println("\n--- Final Summary ---");
+        System.out.println("Total unique bogie IDs in train: " + app.getUniqueBogieIDCount());
     }
 }
