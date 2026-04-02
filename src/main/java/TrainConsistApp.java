@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,14 +26,18 @@ public class TrainConsistApp {
     // LinkedHashSet to maintain insertion order with uniqueness (UC5)
     private LinkedHashSet<String> orderedFormation;
     
+    // HashMap to map bogie names to their capacity (UC6)
+    private HashMap<String, Integer> bogieCapacityMap;
+    
     /**
-     * Constructor - Initialize ArrayList, HashSet, LinkedList, and LinkedHashSet
+     * Constructor - Initialize ArrayList, HashSet, LinkedList, LinkedHashSet, and HashMap
      */
     public TrainConsistApp() {
         this.bogies = new ArrayList<>();
         this.uniqueBogieIDs = new HashSet<>();
         this.orderedConsist = new LinkedList<>();
         this.orderedFormation = new LinkedHashSet<>();
+        this.bogieCapacityMap = new HashMap<>();
     }
     
     /**
@@ -272,6 +278,76 @@ public class TrainConsistApp {
         return orderedFormation.contains(bogie);
     }
     
+    // ========== UC6: Map Bogie to Capacity ==========
+    
+    /**
+     * Add a bogie-capacity mapping (UC6 - HashMap put)
+     * @param bogie The bogie name (key)
+     * @param capacity The seating or load capacity (value)
+     */
+    public void addBogieCapacity(String bogie, int capacity) {
+        bogieCapacityMap.put(bogie, capacity);
+        System.out.println("✓ Mapped: " + bogie + " -> " + capacity + " units");
+    }
+    
+    /**
+     * Get the capacity of a specific bogie (UC6 - HashMap get)
+     * @param bogie The bogie name
+     * @return The capacity, or -1 if not found
+     */
+    public int getBogieCapacity(String bogie) {
+        return bogieCapacityMap.getOrDefault(bogie, -1);
+    }
+    
+    /**
+     * Display all bogie-capacity mappings (UC6 - HashMap entrySet iteration)
+     * Iterates through the map using entrySet() for key-value pairs
+     */
+    public void displayBogieCapacities() {
+        System.out.println("\n--- Bogie Capacity Mapping (HashMap) ---");
+        if (bogieCapacityMap.isEmpty()) {
+            System.out.println("No bogie capacities defined.");
+        } else {
+            System.out.println("Total bogies with capacity info: " + bogieCapacityMap.size());
+            int position = 1;
+            // Using entrySet() for efficient iteration of key-value pairs
+            for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
+                String bogie = entry.getKey();
+                int capacity = entry.getValue();
+                System.out.println(position + ". " + bogie + " -> " + capacity + " units");
+                position++;
+            }
+        }
+    }
+    
+    /**
+     * Display total capacity of all bogies in the map
+     */
+    public void displayTotalCapacity() {
+        int total = 0;
+        for (int capacity : bogieCapacityMap.values()) {
+            total += capacity;
+        }
+        System.out.println("\nTotal Train Capacity: " + total + " units");
+    }
+    
+    /**
+     * Check if a bogie capacity exists
+     * @param bogie The bogie to check
+     * @return true if bogie exists in the map
+     */
+    public boolean isBogieRegistered(String bogie) {
+        return bogieCapacityMap.containsKey(bogie);
+    }
+    
+    /**
+     * Get the size of the bogie capacity map
+     * @return Number of bogies with capacity info
+     */
+    public int getCapacityMapSize() {
+        return bogieCapacityMap.size();
+    }
+    
     /**
      * Main method - Entry point of the application
      * @param args Command line arguments
@@ -403,10 +479,45 @@ public class TrainConsistApp {
             System.out.println("✗ Locomotive is not in the formation");
         }
         
+        // UC6: Map Bogie to Capacity (HashMap)
+        System.out.println("\n--- Mapping Bogie Types to Capacity (HashMap) ---");
+        System.out.println("Associating each bogie with its seating/load capacity");
+        
+        app.addBogieCapacity("Sleeper", 72);
+        app.addBogieCapacity("AC-Chair", 120);
+        app.addBogieCapacity("First-Class", 48);
+        app.addBogieCapacity("Cargo", 500);
+        app.addBogieCapacity("Guard", 12);
+        
+        // Display bogie-capacity mappings
+        app.displayBogieCapacities();
+        
+        // Display total capacity
+        app.displayTotalCapacity();
+        
+        // Check capacity of specific bogies
+        System.out.println("\n--- Querying Specific Bogie Capacities (HashMap get) ---");
+        String searchBogieCapacity1 = "Sleeper";
+        int capacity1 = app.getBogieCapacity(searchBogieCapacity1);
+        if (capacity1 != -1) {
+            System.out.println("✓ " + searchBogieCapacity1 + " capacity: " + capacity1 + " units");
+        } else {
+            System.out.println("✗ " + searchBogieCapacity1 + " not registered");
+        }
+        
+        String searchBogieCapacity2 = "Locomotive";
+        int capacity2 = app.getBogieCapacity(searchBogieCapacity2);
+        if (capacity2 != -1) {
+            System.out.println("✓ " + searchBogieCapacity2 + " capacity: " + capacity2 + " units");
+        } else {
+            System.out.println("✗ " + searchBogieCapacity2 + " not registered");
+        }
+        
         // Final summary
         System.out.println("\n--- Final Summary ---");
         System.out.println("Total unique bogie IDs in train: " + app.getUniqueBogieIDCount());
         System.out.println("Total bogies in ordered consist: " + app.getConsistSize());
         System.out.println("Total bogies in ordered formation: " + app.getFormationSize());
+        System.out.println("Total bogies with capacity mapping: " + app.getCapacityMapSize());
     }
 }
