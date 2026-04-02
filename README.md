@@ -201,6 +201,51 @@ The Train Consist Management App is a console-based Java application that simula
 
 ---
 
+### UC6: Map Bogie to Capacity (HashMap)
+
+**Goal:** Associate each bogie with its seating or load capacity using key-value mapping.
+
+**Actor:** User
+
+**Flow:**
+1. User creates bogie-capacity mappings
+2. System stores bogie name as key, capacity as value in HashMap
+3. User adds mappings: Sleeper→72, AC-Chair→120, First-Class→48, Cargo→500, Guard→12
+4. System displays all mappings in key-value pairs
+5. User queries specific bogie capacities
+6. System calculates and displays total train capacity
+
+**Key Concepts:**
+- HashMap – Hash table implementation of Map interface storing key-value pairs
+- Map Interface – Collection representing mappings between unique keys and their values
+- put() Method – Inserts a key-value pair into the map
+- Key-Value Association – Binds a bogie name to its operational capacity attribute
+- entrySet() Iteration – Efficient traversal of key-value pairs using enhanced for loop
+- get() / getOrDefault() – Fast lookups to retrieve capacity by bogie name
+- containsKey() – Check if a bogie is registered in the mapping
+- values() Method – Get all capacities for calculations
+
+**Key Requirements:**
+✓ Create a HashMap<String, Integer> for bogie-capacity mapping  
+✓ Add mappings: Sleeper→72, AC-Chair→120, First-Class→48, Cargo→500, Guard→12  
+✓ Use put() method to insert key-value pairs  
+✓ Display all mappings using entrySet() iteration (5 total)  
+✓ Calculate and display total capacity (752 units)  
+✓ Query specific capacities: Sleeper (72 units found), Locomotive (not registered)  
+
+**Key Benefits:**
+- Models real-world attribute mapping in data systems
+- Introduces key-value data representation
+- Enables fast O(1) lookup of bogie properties
+- Supports analytics: total capacity, capacity per type
+- Prepares for enterprise data modeling patterns
+- Demonstrates HashMap flexibility for association use cases
+- Bridges single values to complex object associations
+
+**Status:** ✅ Implemented
+
+---
+
 ## Project Structure
 ```
 Train Consist Management App/
@@ -360,6 +405,34 @@ Total unique bogies in formation: 5
 Total unique bogie IDs in train: 4
 Total bogies in ordered consist: 4
 Total bogies in ordered formation: 5
+
+--- Mapping Bogie Types to Capacity (HashMap) ---
+Associating each bogie with its seating/load capacity
+✓ Mapped: Sleeper -> 72 units
+✓ Mapped: AC-Chair -> 120 units
+✓ Mapped: First-Class -> 48 units
+✓ Mapped: Cargo -> 500 units
+✓ Mapped: Guard -> 12 units
+
+--- Bogie Capacity Mapping (HashMap) ---
+Total bogies with capacity info: 5
+1. Cargo -> 500 units
+2. AC-Chair -> 120 units
+3. First-Class -> 48 units
+4. Guard -> 12 units
+5. Sleeper -> 72 units
+
+Total Train Capacity: 752 units
+
+--- Querying Specific Bogie Capacities (HashMap get) ---
+✓ Sleeper capacity: 72 units
+✗ Locomotive not registered
+
+--- Final Summary ---
+Total unique bogie IDs in train: 4
+Total bogies in ordered consist: 4
+Total bogies in ordered formation: 5
+Total bogies with capacity mapping: 5
 ```
 
 ## Development Workflow
