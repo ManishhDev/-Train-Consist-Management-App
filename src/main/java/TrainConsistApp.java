@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -20,13 +21,17 @@ public class TrainConsistApp {
     // LinkedList to maintain ordered train consist (UC4)
     private LinkedList<String> orderedConsist;
     
+    // LinkedHashSet to maintain insertion order with uniqueness (UC5)
+    private LinkedHashSet<String> orderedFormation;
+    
     /**
-     * Constructor - Initialize ArrayList, HashSet, and LinkedList
+     * Constructor - Initialize ArrayList, HashSet, LinkedList, and LinkedHashSet
      */
     public TrainConsistApp() {
         this.bogies = new ArrayList<>();
         this.uniqueBogieIDs = new HashSet<>();
         this.orderedConsist = new LinkedList<>();
+        this.orderedFormation = new LinkedHashSet<>();
     }
     
     /**
@@ -217,6 +222,56 @@ public class TrainConsistApp {
         return orderedConsist.size();
     }
     
+    // ========== UC5: LinkedHashSet Operations - Preserve Insertion Order with Uniqueness ==========
+    
+    /**
+     * Attach a bogie to the ordered formation (UC5 - LinkedHashSet)
+     * LinkedHashSet maintains insertion order AND enforces uniqueness
+     * @param bogie The bogie type to attach
+     */
+    public void attachBogieToFormation(String bogie) {
+        if (orderedFormation.add(bogie)) {
+            System.out.println("✓ Attached to formation: " + bogie);
+        } else {
+            System.out.println("⚠ Duplicate bogie ignored: " + bogie + " (already in formation)");
+        }
+    }
+    
+    /**
+     * Display the ordered train formation in attachment sequence (UC5)
+     * LinkedHashSet returns elements in insertion order, preserving physical sequence
+     */
+    public void displayOrderedFormation() {
+        System.out.println("\n--- Ordered Train Formation (LinkedHashSet) ---");
+        if (orderedFormation.isEmpty()) {
+            System.out.println("Formation is empty.");
+        } else {
+            System.out.println("Total unique bogies in formation: " + orderedFormation.size());
+            int position = 1;
+            for (String bogie : orderedFormation) {
+                System.out.println(position + ". " + bogie);
+                position++;
+            }
+        }
+    }
+    
+    /**
+     * Get the size of the ordered formation
+     * @return Number of unique bogies in formation
+     */
+    public int getFormationSize() {
+        return orderedFormation.size();
+    }
+    
+    /**
+     * Check if a bogie exists in the formation
+     * @param bogie The bogie to search for
+     * @return true if bogie is in formation
+     */
+    public boolean isInFormation(String bogie) {
+        return orderedFormation.contains(bogie);
+    }
+    
     /**
      * Main method - Entry point of the application
      * @param args Command line arguments
@@ -313,9 +368,45 @@ public class TrainConsistApp {
         System.out.println("\n--- Final Ordered Train Consist ---");
         app.displayOrderedConsist();
         
+        // UC5: Preserve Insertion Order of Bogies (LinkedHashSet)
+        System.out.println("\n--- Building Ordered Formation (LinkedHashSet - Order + Uniqueness) ---");
+        System.out.println("Attaching bogies to formation: Engine -> Sleeper -> Cargo -> Guard");
+        
+        app.attachBogieToFormation("Engine");
+        app.attachBogieToFormation("Sleeper");
+        app.attachBogieToFormation("Cargo");
+        app.attachBogieToFormation("Guard");
+        
+        // Display formation after initial attachments
+        app.displayOrderedFormation();
+        
+        // Attempt to attach duplicate bogies (automatic deduplication by LinkedHashSet)
+        System.out.println("\n--- Attempting to Attach Duplicate Bogies ---");
+        app.attachBogieToFormation("Sleeper");  // Duplicate
+        app.attachBogieToFormation("Engine");   // Duplicate
+        app.attachBogieToFormation("Pantry");   // New bogie
+        
+        // Display formation after duplicate attempts
+        app.displayOrderedFormation();
+        
+        // Check if specific bogies exist in formation
+        System.out.println("\n--- Checking Bogie Presence in Formation ---");
+        if (app.isInFormation("Sleeper")) {
+            System.out.println("✓ Sleeper is in the formation");
+        } else {
+            System.out.println("✗ Sleeper is not in the formation");
+        }
+        
+        if (app.isInFormation("Locomotive")) {
+            System.out.println("✓ Locomotive is in the formation");
+        } else {
+            System.out.println("✗ Locomotive is not in the formation");
+        }
+        
         // Final summary
         System.out.println("\n--- Final Summary ---");
         System.out.println("Total unique bogie IDs in train: " + app.getUniqueBogieIDCount());
         System.out.println("Total bogies in ordered consist: " + app.getConsistSize());
+        System.out.println("Total bogies in ordered formation: " + app.getFormationSize());
     }
 }
