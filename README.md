@@ -112,6 +112,50 @@ The Train Consist Management App is a console-based Java application that simula
 
 ---
 
+### UC4: Maintain Ordered Bogie IDs (LinkedList)
+
+**Goal:** Maintain the physical sequence of train bogies using LinkedList while ensuring insertion order preservation.
+
+**Actor:** User
+
+**Flow:**
+1. User builds ordered consist: Locomotive → Sleeper → AC Chair → Cargo → Guard Coach
+2. System inserts bogies into LinkedList (maintains order)
+3. User inserts Pantry Car at position 2
+4. User detaches Locomotive from beginning
+5. User detaches Guard Coach from end
+6. Final ordered consist is displayed
+
+**Key Concepts:**
+- LinkedList – Doubly linked list implementation with node-based storage
+- Node Structure – Each element has references to previous and next nodes
+- addFirst() / addLast() – Methods to attach bogies at head or tail
+- add(index, element) – Insert bogie at specific position
+- removeFirst() / removeLast() – Detach bogies from head or tail
+- Order Preservation – Maintains physical sequence of train formation
+- get(index) – Access elements by position
+
+**Key Requirements:**
+✓ Create a LinkedList<String> for ordered consist  
+✓ Add bogies: Locomotive, Sleeper, AC-Chair, Cargo, Guard-Coach (using addLast)  
+✓ Print the consist showing all bogies in order (6 total after insertion)  
+✓ Insert Pantry-Car at position 2 using add(index, element)  
+✓ Remove Locomotive from beginning using removeFirst()  
+✓ Remove Guard-Coach from end using removeLast()  
+✓ Print final consist showing remaining ordered bogies (4 total)  
+
+**Key Benefits:**
+- Models real-world train chaining behavior
+- Maintains physical sequence unlike HashSet
+- Demonstrates when LinkedList is better than ArrayList
+- Efficient insertion/removal at head and tail (O(1))
+- Helps visualize node-based data structures
+- Supports both index-based and reference-based operations
+
+**Status:** ✅ Implemented
+
+---
+
 ## Project Structure
 ```
 Train Consist Management App/
@@ -191,6 +235,50 @@ Total unique bogie IDs: 4
 
 --- Final Summary ---
 Total unique bogie IDs in train: 4
+Total bogies in ordered consist: 4
+
+--- Building Ordered Train Consist (LinkedList) ---
+Creating ordered consist: Locomotive -> Passenger -> Cargo -> Guard
+✓ Added to END: Locomotive
+✓ Added to END: Sleeper
+✓ Added to END: AC-Chair
+✓ Added to END: Cargo
+✓ Added to END: Guard-Coach
+
+--- Ordered Train Consist (LinkedList) ---
+Total bogies in consist: 5
+1. Locomotive
+2. Sleeper
+3. AC-Chair
+4. Cargo
+5. Guard-Coach
+
+--- Inserting Pantry Car at Position 2 ---
+✓ Inserted at position 2: Pantry-Car
+
+--- Ordered Train Consist (LinkedList) ---
+Total bogies in consist: 6
+1. Locomotive
+2. Sleeper
+3. Pantry-Car
+4. AC-Chair
+5. Cargo
+6. Guard-Coach
+
+--- Removing First Bogie (Locomotive) ---
+✓ Removed from BEGINNING: Locomotive
+
+--- Removing Last Bogie (Guard Coach) ---
+✓ Removed from END: Guard-Coach
+
+--- Final Ordered Train Consist ---
+
+--- Ordered Train Consist (LinkedList) ---
+Total bogies in consist: 4
+1. Sleeper
+2. Pantry-Car
+3. AC-Chair
+4. Cargo
 ```
 
 ## Development Workflow
